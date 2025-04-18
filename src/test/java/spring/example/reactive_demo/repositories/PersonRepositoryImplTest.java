@@ -97,4 +97,26 @@ class PersonRepositoryImplTest {
         bobMono.subscribe(person -> System.out.println(person.toString()));
     }
 
+    @Test
+    void testFindPersonByIdNotFound() {
+        Flux<Person> personFlux = personRepository.findAll();
+
+        final Integer id = 8;
+
+        Mono<Person> personMono = personFlux.filter(person -> person.getId() == id).single()
+                .doOnError(throwable -> {
+                    System.out.println("Error in flux");
+                    System.out.println("Throwable message" + throwable.getMessage());
+                });
+
+        // This is required, no back pressure then no exception will be thrown
+        personMono.subscribe(person -> {
+            System.out.println(person.toString());
+        }, throwable -> {
+            System.out.println("An error has occurred");
+            System.out.println(throwable.getMessage());
+        });
+
+    }
+
 }
