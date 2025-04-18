@@ -8,7 +8,7 @@ public class PersonRepositoryImpl implements PersonRepository {
 
     Person micheal = Person.builder().id(1).firstName("Micheal").lastName("Weston").build();
     Person micheal1 = Person.builder().id(1).firstName("Micheal").lastName("Weston1").build();
-    Person micheal2 = Person.builder().id(1).firstName("Micheal").lastName("Weston2").build();
+    Person micheal2 = Person.builder().id(1).firstName("Bob").lastName("Weston2").build();
 
     @Override
     public Mono<Person> getById(Integer id) {

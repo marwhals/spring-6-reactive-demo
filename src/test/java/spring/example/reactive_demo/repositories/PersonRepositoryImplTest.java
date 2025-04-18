@@ -82,4 +82,19 @@ class PersonRepositoryImplTest {
 
     }
 
+    @Test
+    void testFilterOnName() {
+        personRepository.findAll()
+                .filter(person -> person.getFirstName().equals("Micheal"))
+                .subscribe(person -> System.out.println(person.toString()));
+    }
+
+    @Test
+    void testGetById() {
+        Mono<Person> bobMono = personRepository.findAll().filter(person -> person.getFirstName().equals("Bob"))
+                .next();
+        //Need subscribe for the "back pressure" of a subscriber asking for some data from server
+        bobMono.subscribe(person -> System.out.println(person.toString()));
+    }
+
 }
