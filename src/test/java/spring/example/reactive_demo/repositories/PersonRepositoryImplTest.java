@@ -7,6 +7,9 @@ import spring.example.reactive_demo.domain.Person;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 class PersonRepositoryImplTest {
 
     PersonRepositoryImpl personRepository = new PersonRepositoryImpl();
@@ -116,7 +119,22 @@ class PersonRepositoryImplTest {
             System.out.println("An error has occurred");
             System.out.println(throwable.getMessage());
         });
-
     }
+
+    @Test
+    void testGetByIdFound() {
+        Mono<Person> personMono = personRepository.getById(2);
+
+        assertTrue(personMono.hasElement().block());
+    }
+
+    @Test
+    void testGetByIdNotFound() {
+        Mono<Person> personMono = personRepository.getById(6);
+
+        assertFalse(personMono.hasElement().block());
+    }
+
+
 
 }
